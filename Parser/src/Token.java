@@ -13,7 +13,7 @@ public class Token {
         setValue(value);
     }
 
-    public String getIndex(){return index}
+    public int getIndex(){return index;}
 
     public String getType() {
         return type;
