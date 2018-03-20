@@ -22,7 +22,20 @@ public class TokenParse {
     }
 
     private String parseTopDef(int ind){
-        String ret = tokens.get(curr).toString() + "\n";
+
+        Token c = tokens.get(curr);
+        String ret = c.toString() + "\n";
+
+        if(c.getIntType() == 5){
+            this.parseFunDef(ind + 1);
+        }else if(c.getIntType() == 6){
+            this.parseCofunDef(ind + 1);
+        }else if(c.getIntType() == 7){
+            this.parseTypeDef(ind + 1);
+        }else{
+            System.out.println("ERROR");
+        }
+
         for(int i = 0; i < ind; i++){
             ret = "   " + ret;
         }
@@ -30,8 +43,23 @@ public class TokenParse {
         return ret;
     }
     private String parseFunDef(int ind){
+        Token c = tokens.get(curr);
+        String ret = c.toString() + "\n";
+        for(int i = 0; i < ind; i++){
+            ret = "   " + ret;
+        }
+        c = tokens.get(curr++);
+        if(c.getIntType() != 9){
+            System.out.println("ERROR");
+        }else{
+            String r = c.toString() + "\n";
+            for(int i = 0; i < ind + 1; i++){
+                r = "   " + r;
+            }
+            ret = ret + r;
+        }
 
-        return "";
+        return ret;
     }
     private String parseCofunDef(int ind){
 
