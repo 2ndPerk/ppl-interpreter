@@ -11,5 +11,8 @@ public class Parser {
         for( int i = 0; i < tokens.size(); i++){
             System.out.println(tokens.get(i).toString());
         }
+
+        TokenParse parser = new TokenParse(tokens);
+        System.out.println(parser.parseProgram(0));
     }
 }
