@@ -119,9 +119,24 @@ public class TokenParse {
     }
     private String parseBody(int ind){
         String ret = "";
+        ret = ret + this.parseStatement(ind + 1);
+        int t = tokens.get(++curr).getIntType();
+        System.out.println(t + " Body");
+        if(t < 13 || t == 14) {
+            ret = ret + this.parseBody(ind + 1);
+        }
+        String temp = "Body\n";
+        for(int i = 0; i < ind; i++){
+            temp = "   " + temp;
+        }
+        ret = temp + ret;
+        return ret;
+    }
+    private String parseStatement(int ind){
+        String ret = "";
         Token c = tokens.get(curr);
         int t = c.getIntType();
-        System.out.println(t + " body");
+        System.out.println(t + " Statement");
         if(t == 5){
             ret = ret + this.parseFunDef(ind + 1);
         }else if(t == 6){
@@ -135,20 +150,12 @@ public class TokenParse {
         }else if( t == 12 || t == 14){
             parseLambda(ind + 1);
         }
-        t = tokens.get(++curr).getIntType();
-        if(t < 13 || t == 14) {
-            ret = ret + this.parseBody(ind + 1);
-        }
-        String temp = "Body\n";
+        String temp = "Statement\n";
         for(int i = 0; i < ind; i++){
             temp = "   " + temp;
         }
         ret = temp + ret;
         return ret;
-    }
-    private String parseStatement(int ind){
-
-        return "";
     }
     private String parseVarDef(int ind){
 
