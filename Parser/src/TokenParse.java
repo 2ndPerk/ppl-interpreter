@@ -156,8 +156,11 @@ public class TokenParse {
     }
     private String parseSimpleStatement(int ind){
         Token c = tokens.get(curr);
-
-        return "";
+        String ret = c.getType()+"\n";
+        for(int i = 0; i < ind; i++){
+            ret = "   " + ret;
+        }
+        return ret;
     }
     private String parseLambda(int ind){
 
