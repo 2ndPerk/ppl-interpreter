@@ -37,7 +37,7 @@ public class TokenParse {
         }else if(c.getIntType() == 7){
             ret = ret + this.parseTypeDef(ind + 1);
         }else{
-            throw new TokenizedException("(TopDef) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
                                             + ", at Line: " + c.getLineCount()
                                             + ", Word: " + c.getWordCount());
         }
@@ -52,7 +52,7 @@ public class TokenParse {
         ret = indent(ind + 1) + ret;
         c = tokens.get(++curr);
         if(c.getIntType() != 9){
-            throw new TokenizedException("(FunDef) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }else{
@@ -64,7 +64,7 @@ public class TokenParse {
         }
         c = tokens.get(curr);
         if(c.getIntType() != 16){
-            throw new TokenizedException("(FunDef 2)Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
@@ -77,7 +77,7 @@ public class TokenParse {
         ret = indent(ind) + ret;
         c = tokens.get(++curr);
         if(c.getIntType() != 9){
-            throw new TokenizedException("(Cofundef) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }else{
@@ -90,7 +90,7 @@ public class TokenParse {
         }
         c = tokens.get(curr);
         if(c.getIntType() != 16){
-            throw new TokenizedException("(Cofundef 2)Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
@@ -104,7 +104,7 @@ public class TokenParse {
         if(c.getIntType() == 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            throw new TokenizedException("(TypeDef) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
@@ -119,7 +119,7 @@ public class TokenParse {
         if(c.getIntType() == 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            throw new TokenizedException("(Fields) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
@@ -167,7 +167,7 @@ public class TokenParse {
         if(c.getIntType() != 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            throw new TokenizedException("(VarDef) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
@@ -199,7 +199,7 @@ public class TokenParse {
 
         c = tokens.get(curr);
         if(c.getIntType() != 13){
-            throw new TokenizedException("(FunLambda) Error for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }else{
@@ -218,7 +218,7 @@ public class TokenParse {
 
         c = tokens.get(curr);
         if(c.getIntType() != 15){
-            throw new TokenizedException("(CofunLambda) Error for token with value: "+ c.toString()
+            throw new TokenizedException("rror for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }else{
