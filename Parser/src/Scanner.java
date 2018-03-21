@@ -35,18 +35,18 @@ public class Scanner {
                 br.close();
             }
 
-            //String output = "";
+            String output = "";
             List <Token> tokenList = new ArrayList<Token>();
 
             // Taken fully tokenized string and outputing.
             for (int i = tokenized.size() - 1; i >= 0; i--){
                 if(tokenized.get(i) != null) {
-                    //output += tokenized.get(i).toString() + " ";
+                    output += tokenized.get(i).toString() + " ";
                     tokenList.add(tokenized.get(i));
                 }
             }
 
-            //System.out.println(output);
+            System.out.println(output);
             return tokenList;
 
         }catch (Exception e){
