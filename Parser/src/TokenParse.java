@@ -109,7 +109,9 @@ public class TokenParse {
         if(c.getIntType() == 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            System.out.println("Error expected ID got "+c.getType());
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }
         //Fields
         if(tokens.get(++curr).getIntType() == 9){
@@ -123,7 +125,9 @@ public class TokenParse {
         if(c.getIntType() == 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            System.out.println("Error expected ID got "+c.getType());
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }
         //Fields
         if(tokens.get(++curr).getIntType() == 9){
@@ -175,7 +179,9 @@ public class TokenParse {
         if(c.getIntType() != 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
-            System.out.println("Error expected ID got "+c.getType());
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }
         return ret;
     }
@@ -205,7 +211,9 @@ public class TokenParse {
 
         c = tokens.get(++curr);
         if(c.getIntType() != 13){
-            System.out.println("ERROR expected ']' got " + c.getType());
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }else{
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }
@@ -223,7 +231,9 @@ public class TokenParse {
 
         c = tokens.get(++curr);
         if(c.getIntType() != 15){
-            System.out.println("ERROR expected '|]' got " + c.getType());
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }else{
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }
