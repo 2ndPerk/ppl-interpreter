@@ -6,11 +6,15 @@ public class Token {
     String value;
     int intType;
     int index;
+    int wordCount;
+    int lineCount;
 
-    public Token(int type, String value){
+    public Token(int type, String value, int wordCount, int lineCount){
         setIntType(type);
         setType(type);
         setValue(value);
+        setWordCount(wordCount);
+        setLineCount(lineCount);
     }
 
     public int getIndex(){return index;}
@@ -88,6 +92,22 @@ public class Token {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getWordCount(){
+        return this.wordCount;
+    }
+
+    public void setWordCount(int wordCount){
+        this.wordCount = wordCount;
+    }
+
+    public void setLineCount(int lineCount){
+        this.lineCount = lineCount;
+    }
+
+    public int getLineCount(){
+        return this.lineCount;
     }
 
     public String toString(){

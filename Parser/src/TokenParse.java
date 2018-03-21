@@ -13,15 +13,20 @@ public class TokenParse {
 
 
     public String parseProgram(int ind){
-        String retString = "Program \n";
-        while(++curr < tokens.size()) {
-            retString += parseTopDef(ind + 1);
-        }
+        try{
+            String retString = "Program \n";
+            while(++curr < tokens.size()) {
+                retString += parseTopDef(ind + 1);
+            }
 
-        return retString;
+            return retString;
+        } catch(TokenizedException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
-    private String parseTopDef(int ind){
+    private String parseTopDef(int ind) throws TokenizedException{
 
         Token c = tokens.get(curr);
         String ret =  "TopDef \n";
@@ -35,7 +40,9 @@ public class TokenParse {
         }else if(c.getIntType() == 7){
             ret = ret + this.parseTypeDef(ind + 1);
         }else{
-            System.out.println("ERROR");
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+                                            + ", at Line: " + c.getLineCount()
+                                            + ", Word: " + c.getWordCount());
         }
 
         for(int i = 0; i < ind; i++){
@@ -44,7 +51,7 @@ public class TokenParse {
 
         return ret;
     }
-    private String parseFunDef(int ind){
+    private String parseFunDef(int ind) throws TokenizedException{
         Token c = tokens.get(curr);
         String ret = c.toString() + "\n";
         for(int i = 0; i < ind + 1; i++){
@@ -54,7 +61,9 @@ public class TokenParse {
         c = tokens.get(++curr);
         //System.out.println(c.getIntType() + " fundef");
         if(c.getIntType() != 9){
-            System.out.println("ERROR fundef");
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }else{
             String r = c.toString() + "\n";
             for(int i = 0; i < ind + 1; i++){
@@ -69,7 +78,9 @@ public class TokenParse {
         c = tokens.get(++curr);
         //System.out.println(c.getIntType() + " fundef end");
         if(c.getIntType() != 16){
-            System.out.println("Error expected '.'");
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }
         String temp = "FunDef\n";
         for(int i = 0; i < ind; i++){
@@ -86,7 +97,9 @@ public class TokenParse {
         }
         c = tokens.get(++curr);
         if(c.getIntType() != 9){
-            System.out.println("ERROR cofundef");
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }else{
             String r = c.toString() + "\n";
             for(int i = 0; i < ind + 1; i++){
@@ -100,7 +113,9 @@ public class TokenParse {
         }
         c = tokens.get(++curr);
         if(c.getIntType() != 16){
-            System.out.println("Error expected '.'");
+            throw new TokenizedException("Error for token with value: "+ c.toString()
+            + ", at Line: " + c.getLineCount()
+            + ", Word: " + c.getWordCount());
         }
         String temp = "CofunDef\n";
         for(int i = 0; i < ind; i++){

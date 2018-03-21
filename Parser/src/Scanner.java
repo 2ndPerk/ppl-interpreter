@@ -83,11 +83,11 @@ public class Scanner {
                     }
                 }
 
-                tokenized.add(0, new Token(Type.STRING, word));
+                tokenized.add(0, new Token(Type.STRING, word, wordCount, lineCount));
             } else if(word.contentEquals("//"))
                 i = words.size();
             else {
-                Token token = getToken(word);
+                Token token = getToken(word, wordCount, lineCount);
                 if(token == null){
                     throw new TokenizedException("Token does not exist at value: "
                             + word + ", at Line: " + lineCount
@@ -101,7 +101,7 @@ public class Scanner {
         return tokenized;
     }
 
-    public static Token getToken(String word){
+    public static Token getToken(String word, int wordCount, int lineCount){
         int type = -1;
         switch (word) {
             case "fun":
@@ -157,7 +157,7 @@ public class Scanner {
         }
 
         if(type != -1)
-            return new Token(type, word);
+            return new Token(type, word, wordCount, lineCount);
 
         return null; // Token not found, will be caught by error handler.
     }
