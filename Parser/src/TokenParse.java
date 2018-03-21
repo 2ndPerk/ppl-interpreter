@@ -20,7 +20,7 @@ public class TokenParse {
             }
 
             return retString;
-        } catch(TokenizedException e){
+        } catch(Exception e){
             System.out.println(e.getMessage());
         }
         return null;
