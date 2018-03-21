@@ -18,11 +18,11 @@ public class TokenParse {
             String retString = "Program \n";
             while(++curr < tokens.size()) {
                 //System.out.println(tokens.get(curr).toString());
-                retString += parseTopDef(ind + 1);
+                retString += parseTopDef(ind + 1)+"Program\n";
             }
 
             return retString;
-        } catch(TokenizedException e){
+        } catch(Exception e){
             System.out.println(e.getMessage());
         }
         return null;
@@ -77,7 +77,7 @@ public class TokenParse {
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
-        ret = indent(ind) + "FunDef\n" + ret;
+        ret = indent(ind) + "FunDef\n" + ret + indent(ind) + c.toString()+"\n";
         return ret;
     }
     private String parseCofunDef(int ind) throws TokenizedException {
@@ -107,7 +107,7 @@ public class TokenParse {
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
-        ret = indent(ind) + "CofunDef\n" + ret;
+        ret = indent(ind) + "CofunDef\n" + ret + indent(ind) + c.toString()+"\n";
         return ret;
     }
     private String parseTypeDef(int ind) throws TokenizedException{
