@@ -74,7 +74,7 @@ public class TokenParse {
         ret = indent(ind) + "FunDef\n" + ret;
         return ret;
     }
-    private String parseCofunDef(int ind){
+    private String parseCofunDef(int ind) throws TokenizedException{
         Token c = tokens.get(curr);
         String ret = c.toString() + "\n";
         ret = indent(ind) + ret;
@@ -100,7 +100,7 @@ public class TokenParse {
         ret = indent(ind) + "CofunDef\n" + ret;
         return ret;
     }
-    private String parseTypeDef(int ind){
+    private String parseTypeDef(int ind) throws TokenizedException{
         //type
         Token c = tokens.get(curr);
         String ret = indent(ind) + c.toString() + "\n";
@@ -119,7 +119,7 @@ public class TokenParse {
         }
         return ret;
     }
-    private String parseFields(int ind){
+    private String parseFields(int ind) throws TokenizedException{
         String ret = "";
         Token c = tokens.get(curr);
         if(c.getIntType() == 9){
@@ -135,7 +135,7 @@ public class TokenParse {
         }
         return ret;
     }
-    private String parseBody(int ind){
+    private String parseBody(int ind) throws TokenizedException{
         String ret = "";
         ret = ret + this.parseStatement(ind + 1);
         int t = tokens.get(++curr).getIntType();
@@ -146,7 +146,7 @@ public class TokenParse {
         ret = indent(ind) + "Body\n" + ret;
         return ret;
     }
-    private String parseStatement(int ind){
+    private String parseStatement(int ind) throws TokenizedException{
         String ret = "";
         Token c = tokens.get(curr);
         int t = c.getIntType();
@@ -170,7 +170,7 @@ public class TokenParse {
         ret = temp + ret;
         return ret;
     }
-    private String parseVarDef(int ind){
+    private String parseVarDef(int ind) throws TokenizedException{
         String ret = indent(ind) + "VarDef\n";
         Token c = tokens.get(curr);
 
@@ -185,13 +185,13 @@ public class TokenParse {
         }
         return ret;
     }
-    private String parseSimpleStatement(int ind){
+    private String parseSimpleStatement(int ind) throws TokenizedException{
         Token c = tokens.get(curr);
         String ret = c.toString()+"\n";
         ret = indent(ind) + "SimpleStatement\n" + indent(ind+1) + ret;
         return ret;
     }
-    private String parseLambda(int ind){
+    private String parseLambda(int ind) throws TokenizedException{
         String ret = indent(ind) + "Lamda\n";
         if(tokens.get(curr).getIntType() == 12){
             ret = ret + parseFunLambda(ind + 1);
@@ -200,7 +200,7 @@ public class TokenParse {
         }
         return ret;
     }
-    private String parseFunLambda(int ind){
+    private String parseFunLambda(int ind) throws TokenizedException{
         String ret = indent(ind) + "FunLambda";
         Token c = tokens.get(curr);
 
@@ -220,7 +220,7 @@ public class TokenParse {
 
         return ret;
     }
-    private String parseCofunLambda(int ind){
+    private String parseCofunLambda(int ind) throws TokenizedException{
         String ret = indent(ind) + "CofunLambda";
         Token c = tokens.get(curr);
 
