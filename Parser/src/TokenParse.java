@@ -45,10 +45,8 @@ public class TokenParse {
     private String parseFunDef(int ind){
         Token c = tokens.get(curr);
         String ret = c.toString() + "\n";
-        ret = indent(ind) + ret;
-        //System.out.println(c.getIntType() + " fundef x");
+        ret = indent(ind + 1) + ret;
         c = tokens.get(++curr);
-        //System.out.println(c.getIntType() + " fundef");
         if(c.getIntType() != 9){
             System.out.println("ERROR fundef");
         }else{
@@ -59,7 +57,6 @@ public class TokenParse {
             ret = ret + this.parseBody(ind + 1);
         }
         c = tokens.get(++curr);
-        //System.out.println(c.getIntType() + " fundef end");
         if(c.getIntType() != 16){
             System.out.println("Error expected '.'");
         }
@@ -141,7 +138,7 @@ public class TokenParse {
             ret = ret + this.parseCofunDef(ind + 1);
         }else if(t == 7){
             ret = ret + this.parseTypeDef(ind + 1);
-        }else if(t < 5 || (t > 8 || t < 12)){
+        }else if(t < 5 || (t > 8 && t < 12)){
             ret = ret + this.parseSimpleStatement(ind + 1);
         }else if(t == 8){
             ret = ret + this.parseVarDef(ind + 1);
@@ -170,20 +167,53 @@ public class TokenParse {
     private String parseSimpleStatement(int ind){
         Token c = tokens.get(curr);
         String ret = c.toString()+"\n";
-        ret = indent(ind) + ret;
+        ret = indent(ind) + "SimpleStatement\n" + indent(ind+1) + ret;
         return ret;
     }
     private String parseLambda(int ind){
-
-        return "";
+        String ret = indent(ind) + "Lamda\n";
+        if(tokens.get(curr).getIntType() == 12){
+            ret = ret + parseFunLambda(ind + 1);
+        }else if(tokens.get(curr).getIntType() == 12){
+            ret = ret + parseCofunLambda(ind + 1);
+        }
+        return ret;
     }
     private String parseFunLambda(int ind){
+        String ret = indent(ind) + "FunLambda";
+        Token c = tokens.get(curr);
 
-        return "";
+        ret = ret + indent(ind + 1) + c.toString() + "\n";
+
+        c = tokens.get(++curr);
+        ret = ret + parseBody(ind + 1);
+
+        c = tokens.get(++curr);
+        if(c.getIntType() != 13){
+            System.out.println("ERROR expected ']' got " + c.getType());
+        }else{
+            ret = ret + indent(ind + 1) + c.toString() + "\n";
+        }
+
+        return ret;
     }
     private String parseCofunLambda(int ind){
+        String ret = indent(ind) + "CofunLambda";
+        Token c = tokens.get(curr);
 
-        return "";
+        ret = ret + indent(ind + 1) + c.toString() + "\n";
+
+        ++curr;
+        ret = ret + parseBody(ind + 1);
+
+        c = tokens.get(++curr);
+        if(c.getIntType() != 15){
+            System.out.println("ERROR expected '|]' got " + c.getType());
+        }else{
+            ret = ret + indent(ind + 1) + c.toString() + "\n";
+        }
+
+        return ret;
     }
 
     private String indent(int ind){
