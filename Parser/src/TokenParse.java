@@ -30,6 +30,7 @@ public class TokenParse {
         Token c = tokens.get(curr);
         String ret =  "TopDef \n";
 
+        //Checks for fun/cofun/typedef
         if(c.getIntType() == 5){
             ret = ret + this.parseFunDef(ind + 1);
         }else if(c.getIntType() == 6){
@@ -51,6 +52,7 @@ public class TokenParse {
         String ret = c.toString() + "\n";
         ret = indent(ind + 1) + ret;
         c = tokens.get(++curr);
+        //makes sure second token is an id
         if(c.getIntType() != 9){
             throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
@@ -58,11 +60,13 @@ public class TokenParse {
         }else{
             ret = ret +indent(ind + 1)+c.toString()+ "\n";
         }
+        //checks for more Body content
         int t = tokens.get(++curr).getIntType();
         if(t < 13 || t == 14) {
             ret = ret + this.parseBody(ind + 1);
         }
         c = tokens.get(curr);
+        //makes sure last token is a '.'
         if(c.getIntType() != 16){
             throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
@@ -71,6 +75,7 @@ public class TokenParse {
         ret = indent(ind) + "FunDef\n" + ret + indent(ind) + c.toString()+"\n";
         return ret;
     }
+    //same as fundef, but for cofun
     private String parseCofunDef(int ind) throws TokenizedException {
         Token c = tokens.get(curr);
         String ret = c.toString() + "\n";
@@ -101,6 +106,7 @@ public class TokenParse {
         Token c = tokens.get(curr);
         String ret = indent(ind) + c.toString() + "\n";
         c = tokens.get(++curr);
+        //makes sure second token is an id
         if(c.getIntType() == 9){
             ret = ret + indent(ind + 1) + c.toString() + "\n";
         }else{
@@ -108,6 +114,7 @@ public class TokenParse {
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
+        //if next token is ID, parse fields
         if(tokens.get(++curr).getIntType() == 9){
             ret = ret + parseFields(ind);
         }
@@ -123,6 +130,7 @@ public class TokenParse {
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }
+        //fields can be infinite, as long as next token is ID
         if(tokens.get(++curr).getIntType() == 9){
             ret = ret + parseFields(ind);
         }
@@ -130,8 +138,10 @@ public class TokenParse {
     }
     private String parseBody(int ind) throws TokenizedException{
         String ret = "";
+        //first token of body is always statement
         ret = ret + this.parseStatement(ind + 1);
         int t = tokens.get(++curr).getIntType();
+        //body can continue into newbody
         if(t < 13 || t == 14) {
             ret = ret + this.parseBody(ind + 1);
         }
@@ -142,6 +152,7 @@ public class TokenParse {
         String ret = "";
         Token c = tokens.get(curr);
         int t = c.getIntType();
+        //checks for type of statement and parses based on that
         if(t == 5){
             ret = ret + this.parseFunDef(ind + 1);
         }else if(t == 6){
@@ -173,6 +184,7 @@ public class TokenParse {
         }
         return ret;
     }
+    //parses a simple statement, always a single end node on the tree
     private String parseSimpleStatement(int ind) throws TokenizedException{
         Token c = tokens.get(curr);
         String ret = c.toString()+"\n";
@@ -180,7 +192,8 @@ public class TokenParse {
         return ret;
     }
     private String parseLambda(int ind) throws TokenizedException{
-        String ret = indent(ind) + "Lamda\n";
+        String ret = indent(ind) + "Lambda\n";
+        //check if lambda or colambda
         if(tokens.get(curr).getIntType() == 12){
             ret = ret + parseFunLambda(ind + 1);
         }else if(tokens.get(curr).getIntType() == 12){
@@ -197,6 +210,7 @@ public class TokenParse {
         c = tokens.get(++curr);
         ret = ret + parseBody(ind + 1);
 
+        //makes sure the lambda function ends
         c = tokens.get(curr);
         if(c.getIntType() != 13){
             throw new TokenizedException("Error for token with value: "+ c.toString()
@@ -218,7 +232,7 @@ public class TokenParse {
 
         c = tokens.get(curr);
         if(c.getIntType() != 15){
-            throw new TokenizedException("rror for token with value: "+ c.toString()
+            throw new TokenizedException("Error for token with value: "+ c.toString()
             + ", at Line: " + c.getLineCount()
             + ", Word: " + c.getWordCount());
         }else{
@@ -228,6 +242,8 @@ public class TokenParse {
         return ret;
     }
 
+    //this returns a string of spaces equal to the required indent
+    //the only purpose this serves is to build the tree aesthetically, does not provide any actual parsing value
     private String indent(int ind){
         String ret = "";
         for(int i = 0; i < ind; i++){
